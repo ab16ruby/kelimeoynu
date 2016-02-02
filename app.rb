@@ -34,7 +34,7 @@ class App
 
 		puts "##{" " * 15}Kullanıcı#{" " * 15}Puan".bold
 		puts "--------------------------------------------".bold
-		puanlar.liste.each do |kayit|
+		puanlar.liste2.each do |kayit|
 			veri = kayit.split(',')
 			
 			puts "#{i}#{" " * 15}#{veri[0]}#{" " * (24 - veri[0].length)}#{veri[1]}".bold

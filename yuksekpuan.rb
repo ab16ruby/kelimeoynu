@@ -9,6 +9,16 @@ class YuksekPuan
 		@kayitlar
 	end
 
+	def liste2
+		@kayitlar.sort { |x, y| 
+
+			veri1 = x.split(',')
+			veri2 = y.split(',')
+
+			veri2[1] <=> veri1[1]
+		}
+	end
+
 	def ekle (veri)
 		raise ArgumentError unless veri.is_a? String
 		@kayitlar << veri

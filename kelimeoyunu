@@ -74,7 +74,7 @@ def ana_uygulama(secim = nil)
 
 				break if j == (harfler.size - 1) 
 			end
-			end
+			
 
 			if basari
 				App.basarili kelime, kullanici, puan
