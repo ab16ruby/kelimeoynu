@@ -1,35 +1,44 @@
 #! /usr/bin/env ruby
 
 require('turkish_support')
+require('json')
 require('./kelime')
+require('./app')
 
 oyun = Kelime.new
 
 loop do 
 	
-	puts `clear`
-	puts "KELİME OYUNUNA HOŞGELDİNİZ"
-	puts "--------------------------"
-	puts "Lütfen bir seçim yapın:"
-	puts " "
-	puts "1- OYUNA BAŞLA"
-	puts "2- YÜKSEK PUANLAR"
-	puts "3- KELİME EKLE"
-	puts "4- KELİME SİL"
-	puts "E- ÇIK"
-	puts " "
-	print "Seçiminiz: "
-
-	sec = gets.chomp.downcase
+	sec = App.ana_menu
 
 	case sec
 
 	when "1"
+		App.temizle
+
+		sec = App.oyun_sonu until ["E", "A"].include? sec
+		sec == "E" ? break : redo
 	
 	when "2"
+		
+		sec = App.oyun_sonu until ["E", "A"].include? sec
+		sec == "E" ? break : redo
+	
+	when "3"
+		App.temizle
 
+		print "Eklemek istediğiniz kelime nedir?: "
+		deger = gets.chomp.downcase
+
+		oyun.kelime_ekle(deger)
+
+		puts " "
+		puts "Kelime başarılı bir şekide ekledi. Teşekkürler!"
+
+		sec = App.oyun_sonu until ["E", "A"].include? sec
+		sec == "E" ? break : redo
+
+	when "E"
+		break
 	end
-			
-
-	sec == "e" ? break : redo
 end
