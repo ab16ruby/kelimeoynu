@@ -10,22 +10,19 @@ require('./yuksekpuan')
 using TurkishSupport
 
 def ana_uygulama(secim = nil)
-
 	oyun = Kelime.new
 
 	loop do 
-		
 		sec = secim.nil? ? App.ana_menu : secim
 
 		case sec
-
 		when "1"
 			App.temizle
 
-			print "Bir kullanıcı adı girin: "
+			print "Bir kullanıcı adı girin: ".bold.yellow
 			kullanici = gets.chomp.downcase
 
-			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz?: "
+			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz?: ".bold
 			harf = gets.chomp.to_i
 
 			kelime = oyun.kac_harf harf
@@ -41,7 +38,7 @@ def ana_uygulama(secim = nil)
 			random.delete(rand)
 			kontrol << rand
 
-			basari = 0
+			basari = false
 			puan = (harfler.size - 1) * 10
 			j = 0
 
@@ -49,19 +46,19 @@ def ana_uygulama(secim = nil)
 				i = 0
 				puts " "
 				harfler.each do |c|
-					print ("\t" + c) if kontrol.include? i
+					print ("\t" + c.bold) if kontrol.include? i
 					print "\t*".yellow unless kontrol.include? i
 					i += 1;
 				end
 
 				puts " "
 				puts " "
-				print "Tahmininiz: ".yellow
+				print "Tahmininiz: ".bold.yellow
 				tahmin = gets.chomp
 				tahmin.upcase!
 
 				if tahmin == kelime
-					basari = 1
+					basari = true
 					break
 				end
 				
@@ -72,65 +69,60 @@ def ana_uygulama(secim = nil)
 				
 				puan -= 10
 
-				break if j == harfler.size - 1 
+				break if j == (harfler.size - 1) 
 			end
 
-			if basari == 1
+			if basari
 				puts " " 
-				puts "-----------"
-				puts "TEBRİKLER #{kullanici}! Aranan kelimeyi buldunuz.".green
-				puts "Kelime: #{kelime}".green
-				puts "Kazandığınız Puan: #{puan}".green
+				puts "-----------".bold
+				puts "TEBRİKLER #{kullanici}! Aranan kelimeyi buldunuz.".bold.green
+				puts "Kelime: #{kelime}".bold.yellow
+				puts "Kazandığınız Puan: #{puan}".bold.magenta
 
 				yeniSkor = YuksekPuan.new()
 				yeniSkor.ekle([kullanici: kullanici, puan: puan])
-
 			else
 				puts " " 
 				puts " " 
-				puts "-----------"
-				puts "OYUN BİTTİ #{kullanici}!".red
-				puts "Aranan kelimeyi bulamadınız.".red
-				puts "Kelime: #{kelime.green}".red
-				puts "Kazandığınız Puan: #{puan}".red
+				puts "-----------".bold
+				puts "OYUN BİTTİ #{kullanici.bold.yellow}!".bold.red
+				puts "Aranan kelimeyi bulamadınız.".bold
+				puts "Kelime: #{kelime.green}".bold.yellow
+				puts "Kazandığınız Puan: #{puan}".bold.magenta
 			end
 
 
 			sec = App.oyun_sonu("Tekrar Oynamak İçin T") until ["E", "A", "T"].include? sec
-			sec == "E" ? break : sec == "A" ? redo : ana_uygulama("1")
-		
+			sec == "E" ? break : (sec == "A" ? redo : ana_uygulama("1"))
 		when "2"
-
 			puanlar = YuksekPuan.new
 
 			puanlar.liste.each do |kayit|
 				puts kayit
 			end
-			
+
 			sec = App.oyun_sonu until ["E", "A"].include? sec
 			sec == "E" ? break : redo
-		
 		when "3"
 			App.temizle
 
-			puts "En az 3 harften oluşan bir kelime girmeniz gerekmektedir."; puts " "
-			print "Eklemek istediğiniz kelime nedir?: "
+			puts "En az 3 harften oluşan bir kelime girmeniz gerekmektedir.".bold; puts " "
+			print "Eklemek istediğiniz kelime nedir?: ".bold
 			deger = gets.chomp
 
 			unless (deger.is_a? String and deger.length > 2)
-				App.mesaj "HATA! Belirtilen şartlara uygun olmayan bir veri girdiniz."
+				App.mesaj "HATA! Belirtilen şartlara uygun olmayan bir veri girdiniz.".bold.red
 			
 			else
 				oyun.kelime_ekle(deger)
-				App.mesaj "HARİKA! Kelime başarılı bir şekide ekledi. Teşekkürler!"
+				App.mesaj "HARİKA! Kelime başarılı bir şekide ekledi. Teşekkürler!".bold.green
 			end
 
 			sec = App.oyun_sonu until ["E", "A"].include? sec
-			sec == "E" ? break : redo
+			sec == "E".bold ? break : redo
 
 		when "4"
 			puts oyun.liste
-
 		when "E"
 			break
 		end

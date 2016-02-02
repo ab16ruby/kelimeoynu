@@ -21,7 +21,7 @@ end
 def yuksekpuanlar
 		
 		File.open('yuksekpuanlar.db','r').readlines.each { |line| puts line }
-		#veriler.each {|kullanıcı| puts "isim ----->  #{kullanıcı.adi} puan -----> #{kullanıcı.puan}"}.to_json
+		
 		
 end	
 

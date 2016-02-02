@@ -3,16 +3,16 @@ require('terminal-color')
 class App
 	def self.ana_menu
 		puts `clear`
-		puts "KELİME OYUNUNA HOŞGELDİNİZ"
-		puts "--------------------------"
+		puts "KELİME OYUNUNA HOŞGELDİNİZ".bold.magenta
+		puts "--------------------------".bold
 		puts "Lütfen bir seçim yapın:"
 		puts " "
-		puts "1- OYUNA BAŞLA".red
-		puts "2- YÜKSEK PUANLAR".blue
-		puts "3- KELİME EKLE".yellow
-		puts "E- ÇIK"
+		puts "1- OYUNA BAŞLA".bold.red
+		puts "2- YÜKSEK PUANLAR".bold.blue
+		puts "3- KELİME EKLE".bold.yellow
+		puts "E- ÇIK".bold
 		puts " "
-		print "Seçiminiz: "
+		print "Seçiminiz: ".bold
 
 		gets.chomp.upcase
 	end
@@ -20,10 +20,10 @@ class App
 	def self.oyun_sonu(mesaj=nil)
 		puts " "
 		puts " "
-		puts "---"
-		puts "Çıkmak için E, Ana Menü için A#{mesaj.nil? ? "" : ", " + mesaj} yazınız: "
-		puts "---"
-		print "Seçiminiz: "
+		puts "---".bold
+		puts "Çıkmak için E, Ana Menü için A#{mesaj.nil? ? "" : ", " + mesaj} yazınız: ".bold
+		puts "---".bold
+		print "Seçiminiz: ".bold
 
 		gets.chomp.upcase
 	end
