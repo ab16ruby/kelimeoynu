@@ -33,11 +33,16 @@ def ana_uygulama(secim = nil)
 			harfler = kelime.chars
 
 
+			kontrol = Array.new
+			random = [*0...harfler.size]
+			rand = random[rand(0...random.size)]
+			random.delete(rand)
+			kontrol << rand
 
 			basari = 0
 			puan = (harfler.size - 1) * 10
 			j = 0
-			kontrol = [0]
+
 			loop do
 				i = 0
 				puts " "
@@ -49,7 +54,7 @@ def ana_uygulama(secim = nil)
 
 				puts " "
 				puts " "
-				print "Tahmininiz: "
+				print "Tahmininiz: ".yellow
 				tahmin = gets.chomp
 				tahmin.upcase!
 
@@ -59,7 +64,9 @@ def ana_uygulama(secim = nil)
 				end
 				
 				j += 1
-				kontrol << j	
+				rand = random[rand(0...random.size)]
+				random.delete(rand)
+				kontrol << rand
 				
 				puan -= 10
 
@@ -67,14 +74,19 @@ def ana_uygulama(secim = nil)
 			end
 
 			if basari == 1
+				puts " " 
+				puts "-----------"
 				puts "TEBRİKLER #{kullanici}! Aranan kelimeyi buldunuz.".green
 				puts "Kelime: #{kelime}".green
 				puts "Kazandığınız Puan: #{puan}".green
 
 			else
+				puts " " 
+				puts " " 
+				puts "-----------"
 				puts "OYUN BİTTİ #{kullanici}!".red
 				puts "Aranan kelimeyi bulamadınız.".red
-				puts "Kelime #{kelime}".red
+				puts "Kelime: #{kelime.green}".red
 				puts "Kazandığınız Puan: #{puan}".red
 			end
 
