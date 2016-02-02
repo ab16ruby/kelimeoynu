@@ -6,7 +6,7 @@ class Kelime
 	end
 
 	def kac_harf (sayi)
-		@kelimeler.select { |kelime| kelime.length == sayi }
+		@kelimeler.select { |kelime| kelime.chomp.length == sayi }
 	end
 
 	def liste

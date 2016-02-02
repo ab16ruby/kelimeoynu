@@ -1,44 +1,95 @@
 #! /usr/bin/env ruby
 
 require('turkish_support')
-require('json')
+require('terminal-color')
 require('./kelime')
 require('./app')
 
-oyun = Kelime.new
+def ana_uygulama(secim = nil)
 
-loop do 
-	
-	sec = App.ana_menu
+	oyun = Kelime.new
 
-	case sec
-
-	when "1"
-		App.temizle
-
-		sec = App.oyun_sonu until ["E", "A"].include? sec
-		sec == "E" ? break : redo
-	
-	when "2"
+	loop do 
 		
-		sec = App.oyun_sonu until ["E", "A"].include? sec
-		sec == "E" ? break : redo
-	
-	when "3"
-		App.temizle
+		sec = secim.nil? ? App.ana_menu : secim
 
-		print "Eklemek istediğiniz kelime nedir?: "
-		deger = gets.chomp.downcase
+		case sec
 
-		oyun.kelime_ekle(deger)
+		when "1"
+			App.temizle
 
-		puts " "
-		puts "Kelime başarılı bir şekide ekledi. Teşekkürler!"
+			print "Bir kullanıcı adı girin: "
+			kullanici = gets.chomp.downcase
 
-		sec = App.oyun_sonu until ["E", "A"].include? sec
-		sec == "E" ? break : redo
+			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz?: "
+			harf = gets.chomp.to_i
 
-	when "E"
-		break
+			kelime = oyun.kac_harf harf
+			kelime = kelime[rand(0...kelime.size)]; kelime.chomp!
+			harfler = kelime.chars
+
+			j = 0
+			kontrol = [0]
+			loop do
+				i = 0
+				harfler.each do |c|
+					print c if kontrol.include? i
+					print "*" unless kontrol.include? i
+					i += 1;
+				end
+
+				puts " "
+				print "Tahmininiz: "
+				tahmin = gets.chomp.downcase
+
+				if tahmin == kelime
+					App.mesaj "BAŞARILI"
+					break
+				else
+					App.mesaj "HATALI"
+					j += 1
+					kontrol << j
+				end
+
+				break if j == harfler.size - 2
+			end
+
+			puts "ARANAN KELİME: #{kelime}"
+
+
+			sec = App.oyun_sonu("Tekrar Oynamak İçin T") until ["E", "A", "T"].include? sec
+			sec == "E" ? break : sec == "A" ? redo : ana_uygulama("1")
+		
+		when "2"
+			
+			sec = App.oyun_sonu until ["E", "A"].include? sec
+			sec == "E" ? break : redo
+		
+		when "3"
+			App.temizle
+
+			puts "En az 3 harften oluşan bir kelime girmeniz gerekmektedir."; puts " "
+			print "Eklemek istediğiniz kelime nedir?: "
+			deger = gets.chomp
+
+			unless (deger.is_a? String and deger.length > 2)
+				App.mesaj "HATA! Belirtilen şartlara uygun olmayan bir veri girdiniz."
+			
+			else
+				oyun.kelime_ekle(deger)
+				App.mesaj "HARİKA! Kelime başarılı bir şekide ekledi. Teşekkürler!"
+			end
+
+			sec = App.oyun_sonu until ["E", "A"].include? sec
+			sec == "E" ? break : redo
+
+		when "4"
+			puts oyun.liste
+
+		when "E"
+			break
+		end
 	end
 end
+
+ana_uygulama

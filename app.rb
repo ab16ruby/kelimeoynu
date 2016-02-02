@@ -1,3 +1,5 @@
+require('terminal-color')
+
 class App
 	def self.ana_menu
 		puts `clear`
@@ -5,9 +7,9 @@ class App
 		puts "--------------------------"
 		puts "Lütfen bir seçim yapın:"
 		puts " "
-		puts "1- OYUNA BAŞLA"
-		puts "2- YÜKSEK PUANLAR"
-		puts "3- KELİME EKLE"
+		puts "1- OYUNA BAŞLA".red
+		puts "2- YÜKSEK PUANLAR".blue
+		puts "3- KELİME EKLE".yellow
 		puts "E- ÇIK"
 		puts " "
 		print "Seçiminiz: "
@@ -15,11 +17,11 @@ class App
 		gets.chomp.upcase
 	end
 
-	def self.oyun_sonu
+	def self.oyun_sonu(mesaj=nil)
 		puts " "
 		puts " "
 		puts "---"
-		puts "Çıkmak için E, Ana Menü için A yazınız: "
+		puts "Çıkmak için E, Ana Menü için A#{mesaj.nil? ? "" : ", " + mesaj} yazınız: "
 		puts "---"
 		print "Seçiminiz: "
 
@@ -28,6 +30,10 @@ class App
 
 	def self.temizle
 		puts `clear`
+	end
+
+	def self.mesaj mesaj
+		puts " "; puts mesaj
 	end
 
 end
