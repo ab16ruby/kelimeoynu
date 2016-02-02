@@ -25,9 +25,14 @@ def ana_uygulama(secim = nil)
 			harf = gets.chomp.to_i
 
 			kelime = oyun.kac_harf harf
-			kelime = kelime[rand(0...kelime.size)]; kelime.chomp!
+			kelime = kelime[rand(0...kelime.size)]
+			kelime = kelime.chomp!
 			harfler = kelime.chars
 
+
+
+			basari = 0
+			puan = (harfler.size - 1) * 10
 			j = 0
 			kontrol = [0]
 			loop do
@@ -43,18 +48,28 @@ def ana_uygulama(secim = nil)
 				tahmin = gets.chomp.downcase
 
 				if tahmin == kelime
-					App.mesaj "BAŞARILI"
+					basari = 1
 					break
 				else
-					App.mesaj "HATALI"
 					j += 1
 					kontrol << j
 				end
+				puan -= 10
 
-				break if j == harfler.size - 2
+				break if j == harfler.size - 1 
 			end
 
-			puts "ARANAN KELİME: #{kelime}"
+			if basari == 1
+				puts "TEBRİKLER! Aranan kelimeyi buldunuz.".green
+				puts "Kelime: #{kelime}".green
+				puts "Kazandığınız Puan: #{puan}".green
+
+			else
+				puts "OYUN BİTTİ!".red
+				puts "Aranan kelimeyi bulamadınız.".red
+				puts "Kelime #{kelime}".red
+				puts "Kazandığınız Puan: #{puan}".red
+			end
 
 
 			sec = App.oyun_sonu("Tekrar Oynamak İçin T") until ["E", "A", "T"].include? sec
