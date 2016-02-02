@@ -5,6 +5,8 @@ require('terminal-color')
 require('./kelime')
 require('./app')
 
+using TurkishSupport
+
 def ana_uygulama(secim = nil)
 
 	oyun = Kelime.new
@@ -27,6 +29,7 @@ def ana_uygulama(secim = nil)
 			kelime = oyun.kac_harf harf
 			kelime = kelime[rand(0...kelime.size)]
 			kelime = kelime.chomp!
+			kelime = kelime.upcase
 			harfler = kelime.chars
 
 
@@ -37,35 +40,39 @@ def ana_uygulama(secim = nil)
 			kontrol = [0]
 			loop do
 				i = 0
+				puts " "
 				harfler.each do |c|
-					print c if kontrol.include? i
-					print "*" unless kontrol.include? i
+					print ("\t" + c) if kontrol.include? i
+					print "\t*".yellow unless kontrol.include? i
 					i += 1;
 				end
 
 				puts " "
+				puts " "
 				print "Tahmininiz: "
-				tahmin = gets.chomp.downcase
+				tahmin = gets.chomp
+				tahmin.upcase!
 
 				if tahmin == kelime
 					basari = 1
 					break
-				else
-					j += 1
-					kontrol << j
 				end
+				
+				j += 1
+				kontrol << j	
+				
 				puan -= 10
 
 				break if j == harfler.size - 1 
 			end
 
 			if basari == 1
-				puts "TEBRİKLER! Aranan kelimeyi buldunuz.".green
+				puts "TEBRİKLER #{kullanici}! Aranan kelimeyi buldunuz.".green
 				puts "Kelime: #{kelime}".green
 				puts "Kazandığınız Puan: #{puan}".green
 
 			else
-				puts "OYUN BİTTİ!".red
+				puts "OYUN BİTTİ #{kullanici}!".red
 				puts "Aranan kelimeyi bulamadınız.".red
 				puts "Kelime #{kelime}".red
 				puts "Kazandığınız Puan: #{puan}".red
