@@ -22,11 +22,11 @@ def ana_uygulama(secim = nil)
 			print "Bir kullanıcı adı girin: ".bold.yellow
 			kullanici = gets.chomp.downcase
 
-			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz? (3-10) : ".bold
+			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz? (3-15) : ".bold
 			harf = gets.chomp.to_i
 
 			ana_uygulama("1") unless harf.is_a? Numeric
-			ana_uygulama("1") if (harf < 3 or harf > 10)
+			ana_uygulama("1") if (harf < 3 or harf > 15)
 
 			kelime = oyun.kac_harf harf
 			kelime = kelime[rand(0...kelime.size)]

@@ -15,7 +15,7 @@ class YuksekPuan
 			veri1 = x.split(',')
 			veri2 = y.split(',')
 
-			veri2[1] <=> veri1[1]
+			veri1[1] <=> veri2[1]
 		}
 	end
 
