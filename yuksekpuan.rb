@@ -1,5 +1,3 @@
-require('json')
-
 class YuksekPuan
 
 	def initialize
@@ -11,9 +9,9 @@ class YuksekPuan
 		@kayitlar
 	end
 
-	def ekle (kelime)
-		raise ArgumentError unless kelime.is_a? String
-		@kayitlar << kelime
+	def ekle (veri)
+		raise ArgumentError unless veri.is_a? String
+		@kayitlar << veri
 		kaydet
 	end
 
@@ -22,7 +20,7 @@ class YuksekPuan
 	def kaydet
 		if File.exist? "yuksekpuan.db" and File.readable? "yuksekpuan.db"
 			File.open("yuksekpuan.db", "w") do |dosya|
-				@kayitlar.each { |kelime| dosya.puts kelime.to_json }
+				@kayitlar.each { |veri| dosya.puts veri.downcase }
 			end
 		end
 	end

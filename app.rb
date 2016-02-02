@@ -1,4 +1,5 @@
 require('terminal-color')
+require('./yuksekpuan.rb')
 
 class App
 	def self.ana_menu
@@ -26,6 +27,40 @@ class App
 		print "Seçiminiz: ".bold
 
 		gets.chomp.upcase
+	end
+
+	def self.yuksek_puan puanlar
+		i = 1
+
+		puts "##{" " * 15}Kullanıcı#{" " * 15}Puan".bold
+		puts "--------------------------------------------".bold
+		puanlar.liste.each do |kayit|
+			veri = kayit.split(',')
+			
+			puts "#{i}#{" " * 15}#{veri[0]}#{" " * (24 - veri[0].length)}#{veri[1]}".bold
+			i += 1
+		end
+	end
+
+	def self.basarili(kelime, kullanici, puan)
+		puts " " 
+		puts "-----------".bold
+		puts "TEBRİKLER #{kullanici}! Aranan kelimeyi buldunuz.".bold.green
+		puts "Kelime: #{kelime}".bold.yellow
+		puts "Kazandığınız Puan: #{puan}".bold.magenta
+
+		yeniSkor = YuksekPuan.new()
+		yeniSkor.ekle("#{kullanici},#{puan}")
+	end
+
+	def self.hatali(kelime, kullanici, puan)
+		puts " " 
+		puts " " 
+		puts "-----------".bold
+		puts "OYUN BİTTİ #{kullanici.bold.yellow}!".bold.red
+		puts "Aranan kelimeyi bulamadınız.".bold
+		puts "Kelime: #{kelime.green}".bold.yellow
+		puts "Kazandığınız Puan: #{puan}".bold.magenta
 	end
 
 	def self.temizle
