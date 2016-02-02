@@ -2,8 +2,10 @@
 
 require('turkish_support')
 require('terminal-color')
+require('json')
 require('./kelime')
 require('./app')
+require('./yuksekpuan')
 
 using TurkishSupport
 
@@ -80,6 +82,9 @@ def ana_uygulama(secim = nil)
 				puts "Kelime: #{kelime}".green
 				puts "Kazandığınız Puan: #{puan}".green
 
+				yeniSkor = YuksekPuan.new()
+				yeniSkor.ekle([kullanici: kullanici, puan: puan])
+
 			else
 				puts " " 
 				puts " " 
@@ -95,6 +100,12 @@ def ana_uygulama(secim = nil)
 			sec == "E" ? break : sec == "A" ? redo : ana_uygulama("1")
 		
 		when "2"
+
+			puanlar = YuksekPuan.new
+
+			puanlar.liste.each do |kayit|
+				puts kayit
+			end
 			
 			sec = App.oyun_sonu until ["E", "A"].include? sec
 			sec == "E" ? break : redo
