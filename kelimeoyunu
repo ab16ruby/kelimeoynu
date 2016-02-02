@@ -20,9 +20,9 @@ def ana_uygulama(secim = nil)
 			App.temizle
 
 			print "Bir kullanıcı adı girin: ".bold.yellow
-			kullanici = gets.chomp.downcase
-
-			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz?: ".bold
+			kullanici = gets.chomp.downcase 
+			if kullanici.is_a? String
+			print "Kaç harfli bir kelime tahmin etmek istiyorsunuz? (3-10): ".bold
 			harf = gets.chomp.to_i
 
 			kelime = oyun.kac_harf harf
@@ -70,6 +70,7 @@ def ana_uygulama(secim = nil)
 				puan -= 10
 
 				break if j == (harfler.size - 1) 
+			end
 			end
 
 			if basari
